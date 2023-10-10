@@ -1,7 +1,9 @@
+import Calendar from "./components/Calendar";
+
 function App() {
 	return (
 		<>
-			<div>Hello, World!</div>
+			<Calendar />
 		</>
 	);
 }
