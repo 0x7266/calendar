@@ -1,4 +1,20 @@
+import { useState, useMemo } from "react";
+import {
+	startOfWeek,
+	startOfMonth,
+	endOfWeek,
+	endOfMonth,
+	eachDayOfInterval,
+} from "date-fns";
+
 export default function Calendar() {
+	const [selectedMonth, setSelectedMonth] = useState(new Date());
+	const calendarDays = useMemo(() => {
+		const firstWeekStart = startOfWeek(startOfMonth(selectedMonth));
+		const lastWeekEnd = endOfWeek(endOfMonth(selectedMonth));
+		return eachDayOfInterval({ start: firstWeekStart, end: lastWeekEnd });
+	}, [selectedMonth]);
+
 	return (
 		<div className="calendar">
 			<div className="header">
@@ -306,3 +322,5 @@ export default function Calendar() {
 		</div>
 	);
 }
+
+function CalendarDay() {}
