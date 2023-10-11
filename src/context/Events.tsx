@@ -1,6 +1,6 @@
-import { ReactNode, createContext } from "react";
-
-const EVENT_COLORS = ["red", "green", "blue"] as const;
+import { ReactNode, createContext, useState } from "react";
+import { UnionOmit } from "../utils/types";
+import { EVENT_COLORS } from "../hooks/useEvents";
 
 type Event = {
 	id: string;
@@ -14,14 +14,23 @@ type Event = {
 
 type EventsContext = {
 	events: Event[];
+	addEvent: (event: UnionOmit<Event, "id">) => void;
 };
 
-const Context = createContext<EventsContext | null>(null);
+export const Context = createContext<EventsContext | null>(null);
 
 type EventsProviderProps = {
 	children: ReactNode;
 };
 
 export function EventsProvider({ children }: EventsProviderProps) {
-	return <Context.Provider value={null}>{children}</Context.Provider>;
+	const [events, setEvents] = useState<Event[]>([]);
+
+	function addEvent(event: UnionOmit<Event, "id">) {
+		setEvents((e) => [...e, { ...event, id: crypto.randomUUID() }]);
+	}
+
+	return (
+		<Context.Provider value={{ events, addEvent }}>{children}</Context.Provider>
+	);
 }
