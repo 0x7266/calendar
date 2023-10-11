@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { ReactNode, createContext } from "react";
 
 const EVENT_COLORS = ["red", "green", "blue"] as const;
 
@@ -17,3 +17,11 @@ type EventsContext = {
 };
 
 const Context = createContext<EventsContext | null>(null);
+
+type EventsProviderProps = {
+	children: ReactNode;
+};
+
+export function EventsProvider({ children }: EventsProviderProps) {
+	return <Context.Provider value={null}>{children}</Context.Provider>;
+}
