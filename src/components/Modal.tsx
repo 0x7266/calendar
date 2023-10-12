@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 type ModalProps = {
 	children: ReactNode;
@@ -9,10 +10,11 @@ type ModalProps = {
 export function Modal({ children, isOpen, onClose }: ModalProps) {
 	if (!isOpen) return null;
 
-	return (
+	return createPortal(
 		<div className="modal">
 			<div className="overlay" onClick={onClose} />
 			<div className="modal-body">{children}</div>
-		</div>
+		</div>,
+		document.querySelector("#modal-container") as HTMLElement
 	);
 }
