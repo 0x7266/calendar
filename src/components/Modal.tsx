@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-type ModalProps = {
+export type ModalProps = {
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
