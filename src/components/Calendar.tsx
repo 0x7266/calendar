@@ -163,14 +163,13 @@ function EventFormModal({
 			<form>
 				<div className="form-group">
 					<label htmlFor={`${formId}-name`}>Name</label>
-					<input type="text" name="name" id={`${formId}-name`} />
+					<input required type="text" id={`${formId}-name`} />
 				</div>
 				<div className="form-group checkbox">
 					<input
 						checked={isAllDayChecked}
 						onChange={(e) => setIsAllDayChecked(e.target.checked)}
 						type="checkbox"
-						name="all-day"
 						id={`${formId}-all-day`}
 					/>
 					<label htmlFor={`${formId}-all-day`}>All Day?</label>
@@ -182,7 +181,6 @@ function EventFormModal({
 							required={!isAllDayChecked}
 							disabled={isAllDayChecked}
 							type="time"
-							name="start-time"
 							id={`${formId}-start-time`}
 						/>
 					</div>
@@ -192,7 +190,6 @@ function EventFormModal({
 							required={!isAllDayChecked}
 							disabled={isAllDayChecked}
 							type="time"
-							name="end-time"
 							id={`${formId}-end-time`}
 						/>
 					</div>
