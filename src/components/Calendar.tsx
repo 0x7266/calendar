@@ -142,7 +142,7 @@ function EventFormModal({
 	date,
 	...modalProps
 }: EventFormModalProps) {
-	const isNew = event === null;
+	const isNew = event == null;
 	const formId = useId();
 	const [selectedColor, setSelectedColor] = useState(
 		event?.color || EVENT_COLORS[0]
@@ -219,7 +219,7 @@ function EventFormModal({
 					<button className="btn btn-success" type="submit">
 						{isNew ? "Add" : "Edit"}
 					</button>
-					{onDelete !== null && (
+					{onDelete != null && (
 						<button className="btn btn-delete" type="button" onClick={onDelete}>
 							Delete
 						</button>
