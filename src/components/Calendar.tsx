@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useId } from "react";
 import {
 	startOfWeek,
 	startOfMonth,
@@ -131,7 +131,7 @@ type EventFormModalProps = {
 	onSubmit: (event: UnionOmit<Event, "id">) => void;
 } & (
 	| { onDelete: () => void; event: Event; date?: never }
-	| { onDelete?: never; event?: never; date?: Date }
+	| { onDelete?: never; event?: never; date: Date }
 ) &
 	Omit<ModalProps, "children">;
 
@@ -142,16 +142,21 @@ function EventFormModal({
 	date,
 	...modalProps
 }: EventFormModalProps) {
+	const isNew = event === null;
+	const formId = useId();
+
 	return (
 		<Modal {...modalProps}>
 			<div className="modal-title">
-				<div>Add Event</div>
-				<small>6/8/23</small>
-				<button className="close-btn">&times;</button>
+				<div>{isNew ? "Add" : "Edit"} Event</div>
+				<small>{formatDate(date || event.date, { dateStyle: "short" })}</small>
+				<button className="close-btn" onClick={modalProps.onClose}>
+					&times;
+				</button>
 			</div>
 			<form>
 				<div className="form-group">
-					<label htmlFor="name">Name</label>
+					<label htmlFor={`${formId}-name`}>Name</label>
 					<input type="text" name="name" id="name" />
 				</div>
 				<div className="form-group checkbox">
