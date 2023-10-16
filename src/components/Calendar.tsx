@@ -150,6 +150,7 @@ function EventFormModal({
 	const [isAllDayChecked, setIsAllDayChecked] = useState(
 		event?.allDay || false
 	);
+	const [startTime, setStartTime] = useState(event?.startTime || "");
 
 	return (
 		<Modal {...modalProps}>
@@ -178,6 +179,8 @@ function EventFormModal({
 					<div className="form-group">
 						<label htmlFor={`${formId}-start-time`}>Start Time</label>
 						<input
+							value={startTime}
+							onChange={(e) => setStartTime(e.target.value)}
 							required={!isAllDayChecked}
 							disabled={isAllDayChecked}
 							type="time"
@@ -187,6 +190,7 @@ function EventFormModal({
 					<div className="form-group">
 						<label htmlFor={`${formId}-end-time`}>End Time</label>
 						<input
+							min={startTime}
 							required={!isAllDayChecked}
 							disabled={isAllDayChecked}
 							type="time"
