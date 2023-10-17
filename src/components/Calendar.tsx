@@ -1,4 +1,4 @@
-import { useState, useMemo, useId, useRef } from "react";
+import { useState, useMemo, useId, useRef, FormEvent } from "react";
 import {
 	startOfWeek,
 	startOfMonth,
@@ -151,9 +151,17 @@ function EventFormModal({
 		event?.allDay || false
 	);
 	const [startTime, setStartTime] = useState(event?.startTime || "");
-
 	const endTimeRef = useRef<HTMLInputElement>(null);
 	const nameRef = useRef<HTMLInputElement>(null);
+
+	function handleSubmit(e: FormEvent) {
+		e.preventDefault();
+
+		const name = nameRef.current?.value;
+		const endTime = endTimeRef.current?.value;
+
+		if (name === null || name === "") return;
+	}
 
 	return (
 		<Modal {...modalProps}>
@@ -164,7 +172,7 @@ function EventFormModal({
 					&times;
 				</button>
 			</div>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<div className="form-group">
 					<label htmlFor={`${formId}-name`}>Name</label>
 					<input ref={nameRef} required type="text" id={`${formId}-name`} />
