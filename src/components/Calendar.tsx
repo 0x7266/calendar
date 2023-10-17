@@ -1,4 +1,4 @@
-import { useState, useMemo, useId } from "react";
+import { useState, useMemo, useId, useRef } from "react";
 import {
 	startOfWeek,
 	startOfMonth,
@@ -152,6 +152,9 @@ function EventFormModal({
 	);
 	const [startTime, setStartTime] = useState(event?.startTime || "");
 
+	const endTimeRef = useRef<HTMLInputElement>(null);
+	const nameRef = useRef<HTMLInputElement>(null);
+
 	return (
 		<Modal {...modalProps}>
 			<div className="modal-title">
@@ -164,7 +167,7 @@ function EventFormModal({
 			<form>
 				<div className="form-group">
 					<label htmlFor={`${formId}-name`}>Name</label>
-					<input required type="text" id={`${formId}-name`} />
+					<input ref={nameRef} required type="text" id={`${formId}-name`} />
 				</div>
 				<div className="form-group checkbox">
 					<input
@@ -190,6 +193,7 @@ function EventFormModal({
 					<div className="form-group">
 						<label htmlFor={`${formId}-end-time`}>End Time</label>
 						<input
+							ref={endTimeRef}
 							min={startTime}
 							required={!isAllDayChecked}
 							disabled={isAllDayChecked}
