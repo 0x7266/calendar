@@ -168,6 +168,7 @@ function EventFormModal({
 			color: selectedColor,
 		};
 		let newEvent: UnionOmit<Event, "id">;
+
 		if (isAllDayChecked) {
 			newEvent = {
 				...commonProps,
@@ -189,6 +190,8 @@ function EventFormModal({
 				endTime,
 			};
 		}
+		modalProps.onClose();
+		onSubmit(newEvent);
 	}
 
 	return (
