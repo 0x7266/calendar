@@ -173,6 +173,21 @@ function EventFormModal({
 				...commonProps,
 				allDay: true,
 			};
+		} else {
+			if (
+				startTime == null ||
+				startTime === "" ||
+				endTime == null ||
+				endTime === ""
+			) {
+				return;
+			}
+			newEvent = {
+				...commonProps,
+				allDay: false,
+				startTime,
+				endTime,
+			};
 		}
 	}
 
