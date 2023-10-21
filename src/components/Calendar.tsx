@@ -161,6 +161,19 @@ function EventFormModal({
 		const endTime = endTimeRef.current?.value;
 
 		if (name === null || name === "") return;
+
+		const commonProps = {
+			name,
+			date: date || event?.date,
+			color: selectedColor,
+		};
+		let newEvent: UnionOmit<Event, "id">;
+		if (isAllDayChecked) {
+			newEvent = {
+				...commonProps,
+				allDay: true,
+			};
+		}
 	}
 
 	return (
