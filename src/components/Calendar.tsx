@@ -65,7 +65,7 @@ export default function Calendar() {
 						day={day}
 						showWeekName={index < 7}
 						selectedMonth={selectedMonth}
-						sortedEvents={events.filter((event) => isSameDay(day, event.date))}
+						events={events.filter((event) => isSameDay(day, event.date))}
 					/>
 				))}
 			</div>
@@ -77,17 +77,22 @@ type CalendarDayProps = {
 	day: Date;
 	showWeekName: boolean;
 	selectedMonth: Date;
-	sortedEvents: Event[];
+	events: Event[];
 };
 
 function CalendarDay({
 	day,
 	showWeekName,
 	selectedMonth,
-	sortedEvents,
+	events,
 }: CalendarDayProps) {
 	const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
 	const { addEvent } = useEvents();
+
+	const sortedEvents = useMemo(() => {
+		const timeToNumber = (time: string) => parseFloat(time.replace(":", "."));
+	}, [events]);
+
 	return (
 		<div
 			className={cc(
