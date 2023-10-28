@@ -91,6 +91,18 @@ function CalendarDay({
 
 	const sortedEvents = useMemo(() => {
 		const timeToNumber = (time: string) => parseFloat(time.replace(":", "."));
+
+		return [...events].sort((a, b) => {
+			if (a.allDay && b.allDay) {
+				return 0;
+			} else if (a.allDay) {
+				return -1;
+			} else if (b.allDay) {
+				return 1;
+			} else {
+				return timeToNumber(a.startTime) - timeToNumber(b.startTime);
+			}
+		});
 	}, [events]);
 
 	return (
