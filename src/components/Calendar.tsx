@@ -11,6 +11,7 @@ import {
 	isToday,
 	subMonths,
 	addMonths,
+	isSameDay,
 } from "date-fns";
 import { formatDate } from "../utils/formatDate";
 import { cc } from "../utils/cc";
@@ -26,6 +27,8 @@ export default function Calendar() {
 		const lastWeekEnd = endOfWeek(endOfMonth(selectedMonth));
 		return eachDayOfInterval({ start: firstWeekStart, end: lastWeekEnd });
 	}, [selectedMonth]);
+
+	const { events } = useEvents();
 
 	return (
 		<div className="calendar">
@@ -62,6 +65,7 @@ export default function Calendar() {
 						day={day}
 						showWeekName={index < 7}
 						selectedMonth={selectedMonth}
+						sortedEvents={events.filter((event) => isSameDay(day, event.date))}
 					/>
 				))}
 			</div>
@@ -73,9 +77,15 @@ type CalendarDayProps = {
 	day: Date;
 	showWeekName: boolean;
 	selectedMonth: Date;
+	sortedEvents: Event[];
 };
 
-function CalendarDay({ day, showWeekName, selectedMonth }: CalendarDayProps) {
+function CalendarDay({
+	day,
+	showWeekName,
+	selectedMonth,
+	sortedEvents,
+}: CalendarDayProps) {
 	const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
 	const { addEvent } = useEvents();
 	return (
@@ -102,21 +112,23 @@ function CalendarDay({ day, showWeekName, selectedMonth }: CalendarDayProps) {
 					+
 				</button>
 			</div>
-			{/* <div className="events">
-				<button className="all-day-event blue event">
-					<div className="event-name">Short</div>
-				</button>
-				<button className="all-day-event green event">
-					<div className="event-name">
-						Long Event Name That Just Keeps Going
-					</div>
-				</button>
-				<button className="event">
-					<div className="color-dot blue"></div>
-					<div className="event-time">7am</div>
-					<div className="event-name">Event Name</div>
-				</button>
-			</div> */}
+			{sortedEvents.length > 0 && (
+				<div className="events">
+					<button className="all-day-event blue event">
+						<div className="event-name">Short</div>
+					</button>
+					<button className="all-day-event green event">
+						<div className="event-name">
+							Long Event Name That Just Keeps Going
+						</div>
+					</button>
+					<button className="event">
+						<div className="color-dot blue"></div>
+						<div className="event-time">7am</div>
+						<div className="event-name">Event Name</div>
+					</button>
+				</div>
+			)}
 			<EventFormModal
 				date={day}
 				isOpen={isNewEventModalOpen}
@@ -245,7 +257,7 @@ function EventFormModal({
 					<label>Color</label>
 					<div className="row left">
 						{EVENT_COLORS.map((color) => (
-							<>
+							<div key={color}>
 								<input
 									type="radio"
 									name="color"
@@ -258,7 +270,7 @@ function EventFormModal({
 								<label htmlFor={`${formId}-${color}`}>
 									<span className="sr-only">{color}</span>
 								</label>
-							</>
+							</div>
 						))}
 					</div>
 				</div>
