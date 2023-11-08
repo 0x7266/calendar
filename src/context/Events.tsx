@@ -40,8 +40,16 @@ export function EventsProvider({ children }: EventsProviderProps) {
 		});
 	}
 
+	function deleteEvent(id: string) {
+		setEvents((e) => {
+			return e.filter((event) => {
+				return event.id !== id;
+			});
+		});
+	}
+
 	return (
-		<Context.Provider value={{ events, addEvent, updateEvent }}>
+		<Context.Provider value={{ events, addEvent, updateEvent, deleteEvent }}>
 			{children}
 		</Context.Provider>
 	);
