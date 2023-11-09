@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { UnionOmit } from "../utils/types";
 import { EVENT_COLORS } from "../hooks/useEvents";
 
@@ -66,4 +66,10 @@ function useLocalStorage(key: string, initialValue: Event[]) {
 			return { ...event, date: new Date(event.date) };
 		});
 	});
+
+	useEffect(() => {
+		localStorage.setItem(key, JSON.stringify(value));
+	}, [value, key]);
+
+	return [value, setValue] as const;
 }
