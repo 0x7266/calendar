@@ -20,6 +20,7 @@ import { EVENT_COLORS, useEvents } from "../hooks/useEvents";
 import { Modal, ModalProps } from "./Modal";
 import { UnionOmit } from "../utils/types";
 import { Event } from "../context/Events";
+import { OverflowContainer } from "./OverflowContainer";
 
 export default function Calendar() {
 	const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -131,11 +132,13 @@ function CalendarDay({
 				</button>
 			</div>
 			{sortedEvents.length > 0 && (
-				<div className="events">
-					{sortedEvents.map((event) => (
-						<CalendarEvent key={event.id} event={event} />
-					))}
-				</div>
+				<OverflowContainer
+				className="event"
+				items={sortedEvents}
+				getKey={event => event.id}
+				renderItem={event => <CalendarEvent event={event}/>}
+				renderOverflow={amount => <button className="events-view-more-btn">+{amount} More</button>}
+				/>
 			)}
 			<EventFormModal
 				date={day}
