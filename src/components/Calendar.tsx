@@ -133,7 +133,7 @@ function CalendarDay({
 			</div>
 			{sortedEvents.length > 0 && (
 				<OverflowContainer
-				className="event"
+				className="events"
 				items={sortedEvents}
 				getKey={event => event.id}
 				renderItem={event => <CalendarEvent event={event}/>}
