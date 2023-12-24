@@ -8,9 +8,9 @@ export type Event = {
 	color: (typeof EVENT_COLORS)[number];
 	date: Date;
 } & (
-	| { allDay: false; startTime: string; endTime: string }
-	| { allDay: true; startTime?: never; endTime?: never }
-);
+		| { allDay: false; startTime: string; endTime: string }
+		| { allDay: true; startTime?: never; endTime?: never }
+	);
 
 type EventsContext = {
 	events: Event[];
